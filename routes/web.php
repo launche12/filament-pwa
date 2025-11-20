@@ -7,5 +7,6 @@ if(config('filament-pwa.allow_routes')){
     {
         Route::get('/manifest.json', [\TomatoPHP\FilamentPWA\Http\Controllers\PWAController::class, 'index'])->name('manifest');
         Route::get('/offline/', [\TomatoPHP\FilamentPWA\Http\Controllers\PWAController::class, 'offline'])->name('offline');
+        Route::get('/serviceworker.js', [\TomatoPHP\FilamentPWA\Http\Controllers\PWAController::class, 'serviceWorker'])->name('serviceworker');
     });
 }
