@@ -47,7 +47,7 @@ class PWASettingsPage extends SettingsPage
         return trans('filament-pwa::messages.settings.title');
     }
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Action::make('back')->action(fn()=> redirect()
@@ -60,7 +60,7 @@ class PWASettingsPage extends SettingsPage
 
     public function form(Schema $schema): Schema
     {
-        return $schema->schema([
+        return $schema->components([
             Grid::make(['default' => 2])->schema([
                 Section::make(trans('filament-pwa::messages.sections.general'))
                     ->collapsible()

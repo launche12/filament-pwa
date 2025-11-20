@@ -22,3 +22,23 @@ test('form method returns valid schema', function () {
     expect($schema)->toBeInstanceOf(Schema::class);
     expect($schema->getComponents())->not->toBeEmpty();
 });
+
+test('file upload components have public visibility', function () {
+    $iconUpload = FileUpload::make('pwa_icons_72x72')
+        ->acceptedFileTypes(['image/png'])
+        ->visibility('public');
+
+    expect($iconUpload->getVisibility())->toBe('public');
+
+    $splashUpload = FileUpload::make('pwa_splash_640x1136')
+        ->acceptedFileTypes(['image/png'])
+        ->visibility('public');
+
+    expect($splashUpload->getVisibility())->toBe('public');
+
+    $shortcutUpload = FileUpload::make('icon')
+        ->image()
+        ->visibility('public');
+
+    expect($shortcutUpload->getVisibility())->toBe('public');
+});
