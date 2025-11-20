@@ -2,35 +2,42 @@
 
 namespace TomatoPHP\FilamentPWA\Http\Controllers;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\File;
 use TomatoPHP\FilamentPWA\Services\ManifestService;
 
 class PWAController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json(ManifestService::generate());
     }
 
-    public function offline()
+    public function offline(): View
     {
         return view('filament-pwa::offline');
     }
 
-    public function serviceWorker()
+    public function serviceWorker(): Response
     {
         $jsPath = __DIR__ . '/../../../resources/js/serviceworker.js';
+
+        if (! File::exists($jsPath)) {
+            abort(404, 'Service worker file not found');
+        }
+
         $content = File::get($jsPath);
 
-        $icons = config('filament-pwa.icons', []);
-        $iconsList = collect($icons)->map(function ($icon) {
-            return "'{$icon['src']}'";
-        })->implode(",\n    ");
+        $manifest = ManifestService::generate();
+        $iconsList = collect($manifest['icons'])->map(fn (array $icon): string => "'{$icon['src']}'")->implode(",\n    ");
 
         $content = str_replace('ICONS', $iconsList, $content);
 
         return response($content)
-            ->header('Content-Type', 'application/javascript');
+            ->header('Content-Type', 'application/javascript')
+            ->header('Cache-Control', 'public, max-age=3600');
     }
 }
