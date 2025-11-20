@@ -1,0 +1,6 @@
+providers:
+  - TomatoPHP\FilamentPWA\FilamentPwaServiceProvider
+
+workbench:
+  start: '/'
+  install: true
