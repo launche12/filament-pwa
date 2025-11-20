@@ -19,7 +19,10 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+        "files": [
+            "vendor/pestphp/pest/src/Functions.php"
+        ]
     },
     "extra": {
         "laravel": {
@@ -35,11 +38,20 @@
         }
     ],
     "require": {
-        "php": "^8.1|^8.2",
-        "filament/filament": "^3.2",
-        "filament/notifications": "^3.2",
-        "filament/spatie-laravel-settings-plugin": "^3.2",
+        "php": "^8.2",
+        "filament/filament": "^4.0",
+        "filament/notifications": "^4.0",
+        "filament/spatie-laravel-settings-plugin": "^4.0",
         "tomatophp/filament-settings-hub": "^1.0",
         "tomatophp/console-helpers": "^1.1"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.0",
+        "pestphp/pest": "^4.0",
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "pestphp/pest-plugin-livewire": "^4.0"
+    },
+    "scripts": {
+        "test": "vendor/bin/pest"
     }
 }
