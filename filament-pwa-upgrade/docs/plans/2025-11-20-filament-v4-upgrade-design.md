@@ -50,7 +50,7 @@ protected function getFormSchema(): array
 }
 
 // NEW (v4)
-public function form(Form $form): Form
+public function form(Schema $schema): Schema
 {
     return $form->schema([/* fields */]);
 }

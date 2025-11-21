@@ -326,7 +326,7 @@ Remove line 8 (old Actions import):
 
 Replace method at line 60-231 with:
 ```php
-public function form(Form $form): Form
+public function form(Schema $schema): Schema
 {
     return $form->schema([
         Grid::make(['default' => 2])->schema([
@@ -764,7 +764,7 @@ All PWA icon and splash screen uploads now explicitly use `public` visibility. T
 
 If you've extended the `PWASettingsPage` class:
 
-- `getFormSchema()` has been replaced with `form(Form $form): Form`
+- `getFormSchema()` has been replaced with `form(Schema $schema): Schema`
 - `getActions()` has been replaced with `getHeaderActions()`
 - Action imports changed from `Filament\Pages\Actions\Action` to `Filament\Actions\Action`
 
@@ -785,7 +785,7 @@ protected function getActions(): array
 ```php
 use Filament\Forms\Form;
 
-public function form(Form $form): Form
+public function form(Schema $schema): Schema
 {
     return $form->schema([/* fields */]);
 }
@@ -885,7 +885,7 @@ This PR upgrades the package to Filament v4 compatibility and adds a comprehensi
 - ⚠️ Filament v4.0+ required (was v3.2+)
 
 ### API Changes
-- `PWASettingsPage::getFormSchema()` → `form(Form $form): Form`
+- `PWASettingsPage::getFormSchema()` → `form(Schema $schema): Schema`
 - `PWASettingsPage::getActions()` → `getHeaderActions()`
 - Action imports: `Filament\Pages\Actions\Action` → `Filament\Actions\Action`
 

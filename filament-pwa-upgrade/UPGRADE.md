@@ -51,7 +51,7 @@ All PWA icon and splash screen uploads now explicitly use `public` visibility. T
 
 If you've extended the `PWASettingsPage` class:
 
-- `getFormSchema()` has been replaced with `form(Form $form): Form`
+- `getFormSchema()` has been replaced with `form(Schema $schema): Schema`
 - `getActions()` has been replaced with `getHeaderActions()`
 - Action imports changed from `Filament\Pages\Actions\Action` to `Filament\Actions\Action`
 
@@ -72,7 +72,7 @@ protected function getActions(): array
 ```php
 use Filament\Forms\Form;
 
-public function form(Form $form): Form
+public function form(Schema $schema): Schema
 {
     return $form->schema([/* fields */]);
 }
