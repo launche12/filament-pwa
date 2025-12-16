@@ -2,23 +2,24 @@
 
 namespace TomatoPHP\FilamentPWA\Filament\Pages;
 
+use BackedEnum;
+use Filament\Actions\Action;
 use Filament\Forms\Components\ColorPicker;
-use Filament\Forms\Components\Section;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Pages\Actions\Action;
 use Filament\Pages\SettingsPage;
-use Filament\Forms\Components\Grid;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Support\Exceptions\Halt;
 use Filament\Support\Facades\FilamentView;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Spatie\Sitemap\SitemapGenerator;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Pages\Actions\ButtonAction;
-use Filament\Forms\Components\FileUpload;
 use TomatoPHP\FilamentPWA\Settings\PWASettings;
 use TomatoPHP\FilamentSettingsHub\Settings\SitesSettings;
 use TomatoPHP\FilamentSettingsHub\Traits\UseShield;
@@ -28,8 +29,8 @@ use function Filament\Support\is_app_url;
 class PWASettingsPage extends SettingsPage
 {
     use UseShield;
-    
-    protected static ?string $navigationIcon = 'heroicon-o-cog';
+
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cog';
 
     protected static string $settings = PWASettings::class;
 
@@ -46,7 +47,7 @@ class PWASettingsPage extends SettingsPage
         return trans('filament-pwa::messages.settings.title');
     }
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Action::make('back')->action(fn()=> redirect()
@@ -57,9 +58,9 @@ class PWASettingsPage extends SettingsPage
     }
 
 
-    protected function getFormSchema(): array
+    public function form(Schema $schema): Schema
     {
-        return [
+        return $schema->components([
             Grid::make(['default' => 2])->schema([
                 Section::make(trans('filament-pwa::messages.sections.general'))
                     ->collapsible()
@@ -111,41 +112,49 @@ class PWASettingsPage extends SettingsPage
                     ->schema([
                         FileUpload::make('pwa_icons_72x72')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_icons_72x72'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_icons_72x72")' : null),
                         FileUpload::make('pwa_icons_96x96')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_icons_96x96'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_icons_96x96")' : null),
                         FileUpload::make('pwa_icons_128x128')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_icons_128x128'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_icons_128x128")' : null),
                         FileUpload::make('pwa_icons_144x144')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_icons_144x144'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_icons_144x144")' : null),
                         FileUpload::make('pwa_icons_152x152')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_icons_152x152'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_icons_152x152")' : null),
                         FileUpload::make('pwa_icons_192x192')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_icons_192x192'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_icons_192x192")' : null),
                         FileUpload::make('pwa_icons_384x384')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_icons_384x384'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_icons_384x384")' : null),
                         FileUpload::make('pwa_icons_512x512')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_icons_512x512'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_icons_512x512")' : null),
@@ -156,51 +165,61 @@ class PWASettingsPage extends SettingsPage
                     ->schema([
                         FileUpload::make('pwa_splash_640x1136')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_splash_640x1136'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_splash_640x1136")' : null),
                         FileUpload::make('pwa_splash_750x1334')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_splash_750x1334'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_splash_750x1334")' : null),
                         FileUpload::make('pwa_splash_828x1792')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_splash_828x1792'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_splash_828x1792")' : null),
                         FileUpload::make('pwa_splash_1125x2436')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_splash_1125x2436'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_splash_1125x2436")' : null),
                         FileUpload::make('pwa_splash_1242x2208')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_splash_1242x2208'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_splash_1242x2208")' : null),
                         FileUpload::make('pwa_splash_1242x2688')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_splash_1242x2688'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_splash_1242x2688")' : null),
                         FileUpload::make('pwa_splash_1536x2048')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_splash_1536x2048'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_splash_1536x2048")' : null),
                         FileUpload::make('pwa_splash_1668x2224')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_splash_1668x2224'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_splash_1668x2224")' : null),
                         FileUpload::make('pwa_splash_1668x2388')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_splash_1668x2388'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_splash_1668x2388")' : null),
                         FileUpload::make('pwa_splash_2048x2732')
                             ->acceptedFileTypes(['image/png'])
+                            ->visibility('public')
                             ->label(trans('filament-pwa::messages.form.pwa_splash_2048x2732'))
                             ->columnSpan(2)
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_splash_2048x2732")' : null),
@@ -220,6 +239,7 @@ class PWASettingsPage extends SettingsPage
                                     ->label(trans('filament-pwa::messages.form.pwa_shortcuts_url')),
                                 FileUpload::make('icon')
                                     ->image()
+                                    ->visibility('public')
                                     ->label(trans('filament-pwa::messages.form.pwa_shortcuts_icon')),
                             ])
                             ->label(trans('filament-pwa::messages.form.pwa_shortcuts'))
@@ -227,7 +247,7 @@ class PWASettingsPage extends SettingsPage
                             ->hint(config('filament-settings-hub.show_hint') ? 'setting("pwa_shortcuts")' : null),
                     ])
             ])
-        ];
+        ]);
     }
 
     public function afterSave()

@@ -8,6 +8,12 @@
 
 get a PWA feature on your FilamentPHP app with settings from panel
 
+## Requirements
+
+- PHP 8.2+
+- Laravel 11.28+
+- Filament v4.0+
+
 ## Installation
 
 ```bash
@@ -18,7 +24,7 @@ now you need to publish and migrate settings table
 
 ```bash
 php artisan vendor:publish --provider="Spatie\LaravelSettings\LaravelSettingsServiceProvider" --tag="migrations"
-php artisan filament-settings-hub:install 
+php artisan filament-settings-hub:install
 ```
 
 after install your package please run this command
@@ -27,7 +33,7 @@ after install your package please run this command
 php artisan filament-pwa:install
 ```
 
-finally register the plugin on `/app/Providers/Filament/AdminPanelProvider.php`
+finally reigster the plugin on `/app/Providers/Filament/AdminPanelProvider.php`
 
 ```php
 ->plugin(\TomatoPHP\FilamentPWA\FilamentPWAPlugin::make())
@@ -69,7 +75,26 @@ you can publish languages file by use this command
 php artisan vendor:publish --tag="filament-pwa-lang"
 ```
 
-## Other Filament Packages
+## Support
 
-Checkout our [Awesome TomatoPHP](https://github.com/tomatophp/awesome)
+you can join our discord server to get support [TomatoPHP](https://discord.gg/vKV9U7gD3c)
 
+## Docs
+
+you can check docs of this package on [Docs](https://docs.tomatophp.com/plugins/filament-pwa)
+
+## Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Security
+
+Please see [SECURITY](SECURITY.md) for more information about security.
+
+## Credits
+
+- [Fady Mondy](https://wa.me/+201207860084)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
