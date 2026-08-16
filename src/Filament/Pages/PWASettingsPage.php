@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Spatie\Sitemap\SitemapGenerator;
+use UnitEnum;
 use TomatoPHP\FilamentPWA\Settings\PWASettings;
 use TomatoPHP\FilamentSettingsHub\Settings\SitesSettings;
 use TomatoPHP\FilamentSettingsHub\Traits\UseShield;
@@ -40,7 +41,31 @@ class PWASettingsPage extends SettingsPage
 
     public static function shouldRegisterNavigation(): bool
     {
-        return false;
+        return (bool) config('filament-pwa.navigation.register', false);
+    }
+
+    public static function getNavigationGroup(): string|UnitEnum|null
+    {
+        return static::resolveConfiguredLabel(config('filament-pwa.navigation.group'));
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return static::resolveConfiguredLabel(config('filament-pwa.navigation.label'))
+            ?? trans('filament-pwa::messages.settings.title');
+    }
+
+    /**
+     * Resolves a config value that may hold either a literal label or a
+     * translation key, matching how the settings hub renders its cards.
+     */
+    protected static function resolveConfiguredLabel(?string $value): ?string
+    {
+        if (blank($value)) {
+            return null;
+        }
+
+        return str($value)->contains(['.', '::']) ? trans($value) : $value;
     }
 
     public function getMaxContentWidth(): Width|string|null
@@ -56,7 +81,7 @@ class PWASettingsPage extends SettingsPage
 
     public function getTitle(): string
     {
-        return trans('filament-pwa::messages.settings.title');
+        return static::getNavigationLabel();
     }
 
     protected function getHeaderActions(): array
