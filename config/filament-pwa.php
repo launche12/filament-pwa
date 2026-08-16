@@ -19,8 +19,9 @@ return [
      * ---------------------------------------------------------------
      * Settings Page Max Content Width
      * ---------------------------------------------------------------
-     * Any value of Filament\Support\Enums\Width, e.g. "full", "7xl",
-     * "5xl". Panels default to "7xl"; "full" uses the whole viewport.
+     * null follows the panel (Filament defaults to "7xl", centered).
+     * Set any value of Filament\Support\Enums\Width to override, e.g.
+     * "screen-2xl" (96rem, centered) or "full" (edge to edge).
      */
-    "max_content_width" => "full"
+    "max_content_width" => null
 ];

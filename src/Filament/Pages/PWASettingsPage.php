@@ -45,7 +45,7 @@ class PWASettingsPage extends SettingsPage
 
     public function getMaxContentWidth(): Width|string|null
     {
-        $width = config('filament-pwa.max_content_width', 'full');
+        $width = config('filament-pwa.max_content_width');
 
         if (blank($width)) {
             return parent::getMaxContentWidth();
