@@ -14,6 +14,7 @@ use Filament\Pages\SettingsPage;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Width;
 use Filament\Support\Exceptions\Halt;
 use Filament\Support\Facades\FilamentView;
 use Illuminate\Support\Facades\Artisan;
@@ -40,6 +41,17 @@ class PWASettingsPage extends SettingsPage
     public static function shouldRegisterNavigation(): bool
     {
         return false;
+    }
+
+    public function getMaxContentWidth(): Width|string|null
+    {
+        $width = config('filament-pwa.max_content_width', 'full');
+
+        if (blank($width)) {
+            return parent::getMaxContentWidth();
+        }
+
+        return Width::tryFrom($width) ?? $width;
     }
 
     public function getTitle(): string
