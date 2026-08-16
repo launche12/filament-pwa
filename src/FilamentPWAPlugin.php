@@ -53,7 +53,7 @@ class FilamentPWAPlugin implements Plugin
         if($this->isSettingAllowed()) {
             FilamentSettingsHub::register([
                 SettingHold::make()
-                    ->label(config('filament-pwa.navigation.label') ?: 'filament-pwa::messages.settings.title')
+                    ->label('filament-pwa::messages.settings.title')
                     ->icon('heroicon-o-sparkles')
                     ->page(PWASettingsPage::class)
                     ->description('filament-pwa::messages.settings.description')
