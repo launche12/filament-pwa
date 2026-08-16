@@ -61,7 +61,7 @@ class PWASettingsPage extends SettingsPage
     public function form(Schema $schema): Schema
     {
         return $schema->components([
-            Grid::make(['default' => 2])->schema([
+            Grid::make(['default' => 1])->schema([
                 Section::make(trans('filament-pwa::messages.sections.general'))
                     ->collapsible()
                     ->schema([
