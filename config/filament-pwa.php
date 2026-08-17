@@ -17,6 +17,16 @@ return [
 
     /*
      * ---------------------------------------------------------------
+     * Precache
+     * ---------------------------------------------------------------
+     * Extra paths added to the service worker install cache, on top of
+     * the PWA icons. cache.addAll() is atomic, so a single URL that
+     * responds 404 fails the whole install — list only what exists.
+     */
+    "precache" => [],
+
+    /*
+     * ---------------------------------------------------------------
      * Panel Navigation
      * ---------------------------------------------------------------
      * By default the settings page has no sidebar entry of its own and

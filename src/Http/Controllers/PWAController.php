@@ -32,7 +32,12 @@ class PWAController extends Controller
         $content = File::get($jsPath);
 
         $manifest = ManifestService::generate();
-        $iconsList = collect($manifest['icons'])->map(fn (array $icon): string => "'{$icon['src']}'")->implode(",\n    ");
+        $paths = array_merge(
+            config('filament-pwa.precache', []),
+            collect($manifest['icons'])->pluck('src')->all(),
+        );
+
+        $iconsList = collect($paths)->map(fn (string $path): string => '    "' . $path . '"')->implode(",\n");
 
         $content = str_replace('ICONS', $iconsList, $content);
 
