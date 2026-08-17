@@ -49,6 +49,68 @@ you can use directive to allow PWA on none-FilamentPHP pages, just add this dire
 @filamentPWA
 ```
 
+## Configuration
+
+Publish the config first:
+
+```bash
+php artisan vendor:publish --tag="filament-pwa-config"
+```
+
+### Panel navigation
+
+The settings page has no sidebar entry of its own — it is reached through the Settings Hub. To
+list it in the menu:
+
+```php
+"navigation" => [
+    "register" => true,
+    "group" => "Admin",
+    "label" => "PWA Settings",
+],
+```
+
+`group` and `label` take a literal string or a translation key; values containing `.` or `::` go
+through `trans()`. `null` keeps the package default. `label` also sets the page title, but not the
+card inside the Settings Hub — that one follows the package translations.
+
+### Page width
+
+```php
+"max_content_width" => "screen-2xl",
+```
+
+`null` follows the panel (Filament defaults to `7xl`, centered). Any value of
+`Filament\Support\Enums\Width` works; `full` goes edge to edge.
+
+### Precache
+
+Extra paths added to the service worker install cache, on top of the PWA icons:
+
+```php
+"precache" => ["/css/app.css"],
+```
+
+> [!WARNING]
+> `cache.addAll()` is atomic — a single URL that responds 404 fails the whole service worker
+> install. List only what actually exists.
+
+## Service worker
+
+`filament-pwa:install` writes `public/serviceworker.js`. Files in `public/` are served by the web
+server before the request reaches Laravel, so that file **shadows** the `pwa.serviceworker` route.
+Both produce the same content, but the static file freezes the icon list as it was at install
+time — re-run the installer after changing icons, or delete `public/serviceworker.js` and let the
+route answer.
+
+The same shadowing applies to `public/manifest.json`. If the project previously used another PWA
+setup (PWABuilder, laravel-pwa), that leftover file answers instead of the package route and
+nothing configured in the settings page shows up. Check with:
+
+```bash
+php artisan route:list --name=pwa
+```
+
 ## Publish Assets
 
 you can publish config file by use this command
